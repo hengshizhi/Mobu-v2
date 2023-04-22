@@ -1,0 +1,101 @@
+:root {
+    --accent: #226997;
+    --main: #333;
+    --light: #666;
+    --lighter: #f3f3f3;
+    --border: #e6e6e6;
+    --bg: #ffffff;
+  }
+body {
+    margin: 10%;
+    /* color: var(--main); */
+}
+.daohangl {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    /* border: 1px solid #e7e7e7; */
+    /* background-color: #f3f3f3; */
+}
+
+.daohangl li {
+    float: left;
+}
+
+.daohangl li a {
+    display: block;
+    color: #666;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.daohangl li a:hover:not(.active) {
+    background-color: #ddd;
+}
+
+.daohangl li a.active {
+    color: white;
+    background-color: #4CAF50;
+}
+.wenj {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    /* width: 200px; */
+    /* background-color: #f1f1f1; */
+}
+
+.wenj li a {
+    display: inline-block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+/* Ã©Â¼Â Ã¦Â â€¡Ã§Â§Â»Ã¥Å Â¨Ã¥Ë†Â°Ã©â‚¬â€°Ã©Â¡Â¹Ã¤Â¸Å Ã¤Â¿Â®Ã¦â€Â¹Ã¨Æ’Å’Ã¦â„¢Â¯Ã©Â¢Å“Ã¨â€°Â² */
+.wenj li a:hover {
+    background-color: #555;
+    color: white;
+}
+.delete:hover{
+    background-color: #f80a0a;
+    color: white;
+}
+body {
+    /* background-image: url('https://service-djbqi6pz-1306777571.sh.apigw.tencentcs.com/release/?id=21&form=webp&'); */
+    background-color: rgb(71, 53, 18);
+}
+.example{
+    background-color: #5c372c28;
+    background-image: linear-gradient(to right top, rgba(255,255,255,0.3), rgba(255,255,255,0.7));
+    /* position: relative; */
+    /* width: 90%; */
+    /* height: 600px; */
+    box-shadow: 0 5px 15px rgba(20, 20, 20, 0.8);
+    /* display: table-column-group; */
+    border-radius: 50px;
+    align-items: center;
+    top: 100px;
+    margin: auto;
+    padding: 5%;
+}
+
+.container {
+    margin:0 auto;
+    width: 60%;
+    height: 60%;
+}
+input[type=text] {
+    width: 60%;
+    height: 30px;
+    box-shadow: 0 5px 15px rgba(20, 20, 20, 0.8);
+    background-color: rgba(255,255,255,0.7);
+    font-weight: bold;
+    padding: 0 5px;
+    outline-width: 5px;
+    box-shadow: 0px 0px 12px -1px #b1c1c3;
+    font-size: 14px;
+    color: rgba(60, 60, 60, 0.774);
+}

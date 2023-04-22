@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.3/jquery.js"></script>
+    <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="/admin/index.js"></script>
+    <link rel="stylesheet" href="/admin/index.css">
+    <title>文件管理</title>
+    <style>
+        .del:hover {
+            background-color: #f80a0a;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="example">
+        <!-- <h2>loxis文件管理系统</h2> -->
+        <div id = 'daohangl'>
+            <ul class="daohangl">
+                <li><a href="javascript:void(0);" onclick="homepage()" >主页</a></li>
+                <li><a href="javascript:void(0);" onclick="upload()">上传</a></li>
+                <li><a href="#contact">搜索</a></li>
+                <li><a href="#about">统计</a></li>
+                <li><a href="javascript:void(0);" onclick="new_directory()" >新建目录</a></li>
+                <li><a href="#about">新建文本</a></li>
+                <li><a href="javascript:void(0);" onclick="paste()">粘贴</a></li>
+            </ul>
+        </div>
+        <!-- path显示 -->
+        <p> 
+            <!-- 历史记录 -->
+            <button type="button" id="shuax" onclick="History()">历史记录</button>
+            <!-- 向前回退目录 -->
+            <button type="button" id="shuax" onclick="forward()">←</button>
+            <!-- 向后回退目录 -->
+            <!-- <button type="button" id="shuax" onclick="backward()">→</button> -->
+            <!-- 路径显示 -->
+            path:<span id="path"><script>document.write(get('path'));</script></span><button type="button" id="shuax">刷新</button>
+        </p>
+        <div id = 'wenjiancaid' >
+            <ul id="wenjiancaid_ul" class="wenj">
+                <a href="javascript:void(0);" onclick="flist_li()" style="width: 30%;">加载中</a>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
