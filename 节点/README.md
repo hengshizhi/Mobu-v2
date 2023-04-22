@@ -1,5 +1,4 @@
-# Cute and compact file manager
-一个很小的文件管理系统，临时写来用的，配置文件懂得都懂
+# Mobe node
 ````
 host = "0.0.0.0" # 。。。
 wwwroot = './wwwroot/' #要管理的路径
@@ -13,4 +12,5 @@ port = 8840 #启动端口
 debug = True #debug模式
 dev = True #开发环境
 admin_path = 'admin' #管理路径
+
 ````
