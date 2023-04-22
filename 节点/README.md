@@ -1,8 +1,7 @@
-# Cute and compact file manager
-一个很小的文件管理系统，临时写来用的，配置文件懂得都懂
+# 萌部节点
 ````
 host = "0.0.0.0" # 。。。
-wwwroot = './wwwroot/' #要管理的路径
+wwwroot = './wwwroot/' #根目录
 api_id = 'yWq7XGpQMZqHZOY3zZJCXc11TEHQwA' #API_ID
 api_key = '6kwKzwu9VLPc4j8UDKIh3f58wm9VXR' #API_KEY
 user = 'f2aeadaa9424b3b72a2b2734533596b9' #xinghengshizhiaaa
