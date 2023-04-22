@@ -78,7 +78,9 @@ try:
     import PathInfo as PathInfo # 路径信息获取
     import json as json # json操作类
     import config as config # config
-    from io import BytesIO
+    from NodeStatistics import statistics # 导入统计
+    # import os
+    import time
 except:
     import autoinstall #自动下载库
     from sanic import Sanic #导入sanic web的本体
@@ -91,7 +93,9 @@ except:
     import PathInfo as PathInfo # 路径信息获取
     import json as json # json操作类
     import config as config # config
-    from io import BytesIO
+    from NodeStatistics import statistics # 导入统计
+    # import os
+    import time
 
 try:
     config_data = config.config()
@@ -107,6 +111,8 @@ try:
     debug = config_data['debug'] #debug模式
     dev = config_data['dev'] #开发环境
     admin_path = config_data['admin_path'] #管理路径
+    from PIL import Image
+    from io import BytesIO
 except:
     host = "0.0.0.0" # 。。。
     wwwroot = './wwwroot/'#sys.path[0]+'/mnt/' #网站服务器根路径
@@ -120,6 +126,9 @@ except:
     debug = True #debug模式
     dev = True #开发环境
     admin_path = 'admin' #管理路径
+    Moebu_node_api_verification_failed = True #萌部节点API验证
+    from PIL import Image
+    from io import BytesIO
 
 app = Sanic("Luxis_file_management") #实例化Sanic
 
@@ -359,15 +368,66 @@ async def favicon(request):
 
 import Mobuv2
 async def MobuV2Odj(request):
+    def get_or_post(key):
+        if(request.args.get(key) != None):
+            return request.args.get(key)
+        elif(request.form.get(key) != None):
+            return request.form.get(key)
+        return None
+    if(get_or_post('Moebu_node_api_key') == Moebu_config['api_key'] or not Moebu_config['api_MobuV2Odj_verification_failed']):
+        ret = Mobuv2.MobuV2Main(get_or_post,statistics,request)
+        return raw(ret['content'],headers=[['content-type',ret['MIME']],['Content-Disposition','inline; name="{filename}"; filename="{filename}"'.format(filename='Mobuv2.jpg')]]) # 返回图片
+    else:
+        return text('api verification failed')
+
+async def MobuV2NodeAPI(request):
     def get_or_post(key): #如果没有GET参数就用post
         if(request.args.get(key) != None):
             return request.args.get(key)
         elif(request.form.get(key) != None):
             return request.form.get(key)
         return None
-    ret = Mobuv2.MobuV2Main(get_or_post)
-    return raw(ret['content'],headers=[['content-type',ret['MIME']],['Content-Disposition','inline; name="{filename}"; filename="{filename}"'.format(filename='Mobuv2.jpg')]])
-
+    ApiName = get_or_post('ApiName') # 接收API名
+    def AddImg(): # 新增图片
+        imgdata = list(request.files.get("img"))
+        img = Image.open(BytesIO(imgdata[1]))
+        name = str(time.time())+'.webp'
+        # houzui = os.path.splitext(imgdata[2])[-1] # 文件后缀名
+        img.save('{wwwroot}/img/{name}'.format(wwwroot=wwwroot, name=name))
+        urllist = Mobuv2.GAFNUTD2() # 图片url列表
+        return json.dumps({'OK': True,'id':len(urllist)-1,'url':urllist[-1]})
+    def DelImg(): # 减少图片
+        pass
+    def API(): # API 执行函数
+        if(ApiName == 'Node_data'):
+            ret = {'NodeName':Moebu_config['NodeName'],
+               'obey':Moebu_config['obey'],
+               'statistics':Moebu_config['statistics'],
+            }
+            return text(body=json.dumps(ret))
+        elif(Moebu_config['obey']): # 如果服从主节点的控制就会检索控制API
+            if(ApiName  == 'ImgList'):
+                list = Mobuv2.ImgList()
+                return text(json.dumps(list))
+            elif(ApiName == 'AddImg'):
+                return text(str(AddImg()))
+            elif(ApiName == 'DelImg'):
+                pass
+            elif(ApiName == 'StatisticsData'):
+                statisticsData = statistics.get()
+                TotalFlow = 0 # 总流量
+                for i in statisticsData:TotalFlow += i['Volume'] # 计算总流量
+                return text({'total flow':TotalFlow,  # 总流量
+                             'total visits':len(statisticsData), # 总访问量
+                             'Detail':json.dumps(statisticsData), # 细节数据
+                             })
+            elif(ApiName == 'StatisticsAddW'):
+                return text(statistics.AddW())
+    if(get_or_post('Moebu_node_api_key') == Moebu_config['api_key'] 
+       or not Moebu_config['api_verification_failed']): # API key验证通过或者不需要验证
+        return API()
+    else:
+        return text('api verification failed')
 app.add_route(upload,f'/upload',methods=['GET','POST']) #绑定上传页面
 app.add_route(admin,f'/{admin_path}',methods=['GET']) #管理页面
 app.add_route(admin,f'/{admin_path}/<admin_path:path>',methods=['GET'])
@@ -375,6 +435,16 @@ app.add_route(favicon, "/favicon.ico",methods=["GET"]) # favicon.ico
 app.add_route(path, "/<path_arg:path>",methods=["POST", "GET"]) # 定义根目录访问
 app.add_route(api, "/api/<name:alpha>",methods=["POST", "GET"]) #定义API访问
 app.add_route(MobuV2Odj ,'/Mobuv2',methods=["POST", "GET"])
+app.add_route(MobuV2NodeAPI ,'/Mobuv2NodeAPI',methods=["POST", "GET"])
 # app.add_route(MobuV2Odj ,'/Mobuv2/',methods=["POST", "GET"])
+statistics = statistics()
+Moebu_config = {
+    'NodeName' : 'Mobu node',
+    'statistics' : True,
+    'api_key' : 'iueyxiuwjyuh392ysj8y8kas',
+    'api_verification_failed' : True,
+    'obey' : True, # Whether to obey the management of the main node
+    'api_MobuV2Odj_verification_failed' : False, # 随机图片是否需要验证API
+}
 if __name__ == "__main__":
     app.run(host=host,port=port,debug=debug,dev=dev)

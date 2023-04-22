@@ -10,7 +10,8 @@ def BuildConfiguration(config={'host':'0.0.0.0',
                  'port':9000,
                  'debug':True,
                  'dev':True,
-                 'admin_path':'admin'
+                 'admin_path':'admin',
+                 'Moebu node api verification failed':True
                  }): #写入配置
     with open('config.json','w',encoding='utf-8') as f:
         f.write(json.dumps(config))
