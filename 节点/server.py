@@ -447,4 +447,6 @@ Moebu_config = {
     'api_MobuV2Odj_verification_failed' : False, # 随机图片是否需要验证API
 }
 if __name__ == "__main__":
+    File_operation.mkdir(wwwroot+'img')
+    File_operation.mkdir(wwwroot+'statistics')
     app.run(host=host,port=port,debug=debug,dev=dev)
