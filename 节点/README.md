@@ -1,4 +1,5 @@
 # Mobe node
+直接运行 server.py 即可 ，缺失的库应该会自动补全`python server.py`
 ````
 host = "0.0.0.0" # 。。。
 wwwroot = './wwwroot/' #要管理的路径
